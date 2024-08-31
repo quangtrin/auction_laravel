@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('winners', function (Blueprint $table) {
+        Schema::create('shipping_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('auction_id')->constrained('auctions')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->decimal('winning_bid', 10, 2);
+            $table->foreignId('winner_id')->constrained('winners')->onDelete('cascade');
+            $table->text('shipping_address');
+            $table->string('tracking_number')->nullable();
+            $table->enum('status', ['processing', 'shipped', 'delivered'])->default('processing');
             $table->timestamps();
         });
-
 
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('winners');
+        Schema::dropIfExists('shipping_details');
     }
 };

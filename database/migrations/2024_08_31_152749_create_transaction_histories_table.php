@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('winners', function (Blueprint $table) {
+        Schema::create('transaction_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('auction_id')->constrained('auctions')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->decimal('winning_bid', 10, 2);
+            $table->foreignId('auction_id')->constrained('auctions')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->enum('transaction_type', ['deposit', 'withdrawal', 'payment']);
+            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
             $table->timestamps();
         });
-
 
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('winners');
+        Schema::dropIfExists('transaction_histories');
     }
 };

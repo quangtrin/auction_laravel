@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('auctions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->decimal('starting_price', 10, 2);
             $table->timestamp('start_time');
             $table->timestamp('end_time');
+            $table->enum('status', ['ongoing', 'completed', 'canceled'])->default('ongoing');
             $table->timestamps();
         });
+
 
     }
 
