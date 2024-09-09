@@ -15,13 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->decimal('starting_price', 10, 2);
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable(); // Removed default value here
             $table->enum('status', ['ongoing', 'completed', 'canceled'])->default('ongoing');
             $table->timestamps();
         });
-
-
     }
 
     /**
